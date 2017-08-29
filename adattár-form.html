@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Adatbevitel</title>
+
+<link rel="stylesheet" href="adattar-form.css">
+
+</head>
+<body>
+
+<div id="Adattar">
+
+<h1 id="rublika_cim" >Adattar</h1>
+
+<div id="form_1">
+
+ID:   <input type="text" id="input_1" name="dokumentum_szam">
+<div class="required">Lsz.1</div> <input type="text" id="input_1" name="leltari_szam_1">
+Lsz.2 <input type="text" id="input_1" name="leltari_szam_2">
+<div class="required" >Tarolo szervezet: </div>
+<select id="input_1">
+	<option value="mbfsz">   	 </option>
+	<option value="mbfsz"> MBFSZ </option>
+	<option value="mbk">   MBK   </option>
+</select>
+
+Adattarolo leltari szama: <br> <input type="text" name="szam"> <br>
+			<input type="checkbox" value="CD"> CD 
+			<input type="checkbox" value="DVD"> DVD 
+			<input type="checkbox" value="HDD"> HDD 
+</div>
+</div>
+
+<div id="Dokumentum">
+
+<h1 id="rublika_cim">Dokumentum</h1>
+
+<div id="form_2">
+
+<div id="input_2" class="required"> Cim: </div> 	 <textarea class="area"> </textarea>
+<div id="input_2" class="required"> Szerzo: </div>   <textarea class="area"> </textarea> <br>
+Datum 				 <input type="date" id="input_2" name="datum">
+Telepules: MYSQL-->  <input type="text" id="input_2" name="telepules">
+Tajegyseg: MJSQL-->  <input type="text" id="input_2" name="tajegyseg">
+Szervezet: MYSQL-->  <input type="text" id="input_2" name="szervezet">
+Nyersanyag: MYSQL--> <input type="text" id="input_2" name="nyersanyag">
+Targyszo: 			 <input type="text" id="input_2" name="targy_1">
+Targyszo: 			 <input type="text" id="input_2" name="targy_2">
+Targyszo: 			 <input type="text" id="input_2" name="targy_3">
+
+</div>
+
+</div>
+
+<div id="Tartalom">
+
+<h1 id="rublika_cim">Tartalom</h1>
+
+<div id="form_3">
+
+<h4>Bibliografia</h4>
+
+Oldal: 	   <input type="number" id="input_3" name="oldal" value="0">
+Abra: 	   <input type="number" id="input_3" name="abra" value="0">
+Tablazat:  <input type="number" id="input_3" name="tablazat" value="0">
+Kep: 	   <input type="number" id="input_3" name="kep" value="0">
+Grafikon:  <input type="number" id="input_3" name="grafikon" value="0">
+Fuggelek:  <input type="number" id="input_3" name="fuggelek" value="0">
+Melleklet: <input type="number" id="input_3" name="melleklet" value="0">
+
+<h4>Szakmai elemek</h4>
+
+Terkep 	  <input type="number" id="input_3" value="0">
+Szelveny  <input type="number" id="input_3" value="0">
+Retegsor  <input type="number" id="input_3" value="0">
+Vizsgalat <input type="number" id="input_3" value="0">
+
+</div>
+
+</div>
+
+<div id="Hivatali">
+
+<h1 id="rublika_cim">Hivatali</h1>
+
+<div id="form_4">
+
+Bejegyzo: 	<input type="text" id="input_3" name="bejegyzo" value="Szigeti Mate">
+Korlatozas: <input type="radio" name="korlatozas" value="Igen"> Igen 
+			<input type="radio" name="korlatozas" value="Nem" checked> Nem 	
+			<input type="text" name="korlatozas_tipus" value="Szigoruan titkos"> <br>
+Kelt: 		<input type="date-local" id="input_3">
+
+</div>
+
+</div>
+
+<div id="mentes">
+<input class="gomb" onclick="myFunction()" type="submit" value="Mentes">
+<input class="gomb" type="submit" value="Vissza">
+
+</div>
+
+
+
+</body>
+</html>

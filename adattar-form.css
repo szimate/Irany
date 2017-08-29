@@ -1,0 +1,66 @@
+body {
+	
+	background-image: url("form-logo.png");
+	background-size: 300px 300px;
+	background-position: right;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	
+	
+}
+#Adattar, #Dokumentum, #Tartalom, #Hivatali {
+	display: block;
+	border-style: groove;
+	width: 60%;
+	background: rgba(211, 211, 211, 0.4);
+}
+#form_1, #form_2, #form_3, #form_4 {
+	
+	padding-left: 30%;
+	margin-bottom: 5%;
+	font-family: Arial;
+	letter-spacing: 2px;
+	line-height: 1.5;
+	font-size: 20px;
+	color: black;
+	opacity: 1;
+}
+.required{
+	font-weight: bold;
+}
+
+.area{
+	width: 300px;
+	height: 100px;
+}
+
+#rublika_cim{
+	font-size: 30px;
+	
+}
+
+#input_1, #input_2, #input_3 {
+	display: block;
+		
+}
+#mentes {
+	text-align: center;
+}
+.gomb {
+	color: gray;
+	padding: 10px;
+	border: none;
+	font-size:18px;
+	margin-top: 2px;
+	transition: ease all 300ms;
+}
+.gomb:hover {
+	
+	
+	color: #3a7999;
+	box-shadow: inset 0 0 0 3px #3a7999; 
+	transition-duration: 0.5s;
+	transition: ease all 300ms;
+}
+
+
