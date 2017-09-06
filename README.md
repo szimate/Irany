@@ -1,2 +1,12 @@
-# Irany
-HTML-CSS-JS-DataBase-(I.am.realy.beginer)
+### Web ###
+*.asp
+*.cer
+*.csr
+*.css
+*.htm
+*.html
+*.js
+*.jsp
+*.php
+*.rss
+*.xhtml
