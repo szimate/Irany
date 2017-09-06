@@ -1,12 +1,1 @@
-### Web ###
-*.asp
-*.cer
-*.csr
-*.css
-*.htm
-*.html
-*.js
-*.jsp
-*.php
-*.rss
-*.xhtml
+# A magyarázó feltöltés alatt áll.
