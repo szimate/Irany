@@ -1,4 +1,5 @@
-<?php
+<?php //a cím a böngésző feljécében mindíg változik
+//az adott oldal tartalmához igazítva
   if(!isset($page_title)) { $page_title = 'Wellcome!'; }
 ?>
 
@@ -17,9 +18,10 @@
     <header>
       <h1>Wellcome to Data Storage</h1>
     </header>
-
+<?php   // itt még kikell találni hogy ha a menü gombra megyünk
+// akkor a felhasználó/admin-nak megfelelő felületre térjen vissza           ?>
     <navigation>
       <ul>
-        <li><a href="<?php echo url_for('/wellcome.php'); ?>">Menu</a></li>
+        <li><a href="<?php echo url_for('/master.php'); ?>">Menu</a></li>
       </ul>
     </navigation>

@@ -16,20 +16,35 @@ Jelszó: <br>  <input type="password" class="input_1"> Elfelejtett jelszó
 </div>
 <div id="registration_2">
 <h1>Regisztráció</h1>
-Név: <br> <input type="text" class="input_2"> <br>
-Szervezet: <br> <select class="input_2">
+<form method="post" action="adattar-kezdolap.php">
+Név: <br> <input type="text" name="name" class="input_2">
+<span class="error">* <?php echo $nameErr;?> </span>
+<br>
+Szervezet: <br> <select name="org" class="input_2">
  <option value="none"> 
 <option value="muknavallalo"> Munkavállaló
 <option value="hallgato/diak"> Diák/Hallgató
 <option value="egyeb"> Egyéb
 </select> <br>
-Szervezet neve: <br> <input type="text" class="input_2"> <br>
-Felhasználonév: <br> <input type="text" class="input_2"> <br>
-E-mail cím: <br> <input type="email" class="input_2"> <br>
-Jelszó: <br> <input type="password" class="input_2"> <br>
-Jelszó megerősítése: <br> <input type="password" class="input_2"> <br>
+Szervezet neve: <br> <input type="text" name="org" class="input_2"> <br>
+Felhasználonév: <br> <input type="text" name="orgname" class="input_2">
+<span class="error">* <?php echo $userErr;?> </span>
+<br>
+E-mail cím: <br> <input type="email" name="email" class="input_2">
+<span class="error">* <?php echo $emailErr;?> </span>
+<br>
+Jelszó: <br> <input type="password" name="pass" class="input_2">
+<span class="error">* <?php echo $passErr;?> </span>
+<br>
+Jelszó megerősítése: <br> <input type="password" name="repass" class="input_2">
+<span class="error">* <?php echo $repassErr;?> </span>
+<br>
 <input type="submit" id="gomb" value="Regisztráció" class="input_2"> <br>
+</form>
 </div>
+
+
+
 </body>
 <footer>
 <div id="footer">
