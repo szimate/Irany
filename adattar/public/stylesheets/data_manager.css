@@ -1,0 +1,158 @@
+html {
+  height: 100%;
+}
+body {
+  background:url("../images/logo.png");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: right;
+  background-size: 30%;
+  height: 90%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  }
+
+/* Fejléc*/
+
+header {
+  width: 980px;
+  height: 40px;
+  margin: 5px;
+  padding: 0;
+  background: orange;
+  color: white;
+}
+
+header h1 {
+  margin: 0;
+  padding: 5px;
+  font-size: 20px;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  text-align: center;
+}
+
+navigation {
+  width: 980px;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+navigation ul {
+  width: 980px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+navigation ul li {
+  display: inline;
+  margin-right: 1em;
+}
+
+#content {
+  width: 920px;
+  min-height: 85%;
+  padding: 0 30px;
+}
+#content_reg {
+  width: 920px;
+  min-height: 40%;
+  padding: 0 30px;
+
+}
+
+
+
+
+footer {
+  width: 980px;
+  height: 15px;
+  padding-bottom: 10px;
+  margin: 5px;
+  background: orange;
+  color: white;
+
+}
+
+/* Actions */
+
+.actions {
+  margin-bottom: 1em;
+}
+
+
+/* Lists */
+
+table {
+  border-collapse: collapse;
+  vertical-align: top;
+}
+
+table.list {
+  width: 100%;
+}
+
+table.list tr td {
+  border: 1px solid #999999;
+}
+
+table.list tr th {
+  border: 1px solid orange;
+  background: orange;
+  color: white;
+  text-align: left;
+}
+
+/* Forms */
+
+dl {
+  clear: both;
+  overflow: hidden;
+  margin: 0.5em 0;
+}
+
+dt {
+  float: left;
+  font-weight: bold;
+  width: 125px;
+}
+
+dd {
+  float: left;
+  margin-left: 1em;
+}
+
+#operations {
+  clear: both;
+  margin: 1em 0 1em 75px;
+}
+.submit  {
+  width: 10%;
+  height: 10%;
+  background-color: orange;
+  font-style: bold;
+  font-weight: bolder;
+  font-size: 20;
+  color: white;
+  cursor: pointer;
+}
+#form {
+  padding-left: 30px;
+}
+
+/* Errors */
+
+.errors {
+  display: inline-block;
+  border: 2px solid red;
+  color: red;
+  padding: 1em;
+  margin-bottom: 1em;
+}
+
+.errors ul {
+  margin-bottom: 0;
+  padding-left: 1em;
+}
