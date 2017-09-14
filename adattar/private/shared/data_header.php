@@ -22,6 +22,6 @@
 // akkor a felhasználó/admin-nak megfelelő felületre térjen vissza           ?>
     <navigation>
       <ul>
-        <li><a href="<?php echo url_for('/master.php'); ?>">Menu</a></li>
+        <li><a href="<?php echo url_for('/master.php'); ?>">Back to Menu</a></li>
       </ul>
     </navigation>

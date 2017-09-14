@@ -1,8 +1,9 @@
 html {
   height: 100%;
 }
+
 body {
-  background:url("../images/logo.png");
+  background: url("../images/logo.png");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: right;
@@ -11,7 +12,8 @@ body {
   width: 100%;
   margin: 0;
   padding: 0;
-  }
+}
+
 
 /* Fejléc*/
 
@@ -53,18 +55,26 @@ navigation ul li {
 
 #content {
   width: 920px;
-  min-height: 85%;
+  height: 70%;
   padding: 0 30px;
 }
+
 #content_reg {
   width: 920px;
   min-height: 40%;
   padding: 0 30px;
-
 }
-
-
-
+#search {
+  width: 30%;
+  height: 15%;
+  border: 1px solid orange;
+  font-size: 20px;
+  margin-left: 10%;
+  margin-top: 10%;
+  padding: 2% 2%;
+  text-align: center;
+  background-color: orange;
+}
 
 footer {
   width: 980px;
@@ -73,8 +83,8 @@ footer {
   margin: 5px;
   background: orange;
   color: white;
-
 }
+
 
 /* Actions */
 
@@ -105,6 +115,7 @@ table.list tr th {
   text-align: left;
 }
 
+
 /* Forms */
 
 dl {
@@ -128,9 +139,9 @@ dd {
   clear: both;
   margin: 1em 0 1em 75px;
 }
-.submit  {
-  width: 10%;
-  height: 10%;
+
+/*.submit {
+
   background-color: orange;
   font-style: bold;
   font-weight: bolder;
@@ -138,9 +149,13 @@ dd {
   color: white;
   cursor: pointer;
 }
+*/
+
+
 #form {
   padding-left: 30px;
 }
+
 
 /* Errors */
 
