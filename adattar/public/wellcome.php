@@ -1,52 +1,78 @@
-<?php require_once('../private/initialize.php'); ?>
+<?php require_once('../private/initialize.php');
+
+$errors = [];
+$username = '';
+$password = '';
+
+if(is_post_request()) {
+
+  $username = $_POST['username'] ?? '';
+  $password = $_POST['password'] ?? '';
+
+  // Validations
+  if(is_blank($username)) {
+    $errors[] = "Username cannot be blank.";
+  }
+  if(is_blank($password)) {
+    $errors[] = "Password cannot be blank.";
+  }
+
+  // if there were no errors, try to login
+  if(empty($errors)) {
+    // Using one variable ensures that msg is the same
+    $login_failure_msg = "Belépés sikertelen!";
+    $admin = find_admin_by_username($username);
+
+    if($admin) {
+      if(password_verify($password, $admin['hashed_password'])) {
+        // password matches
+        log_in_admin($admin);
+        redirect_to(url_for('/master.php'));
+      } else {
+        // username found, but password does not match
+        $errors[] = $login_failure_msg;
+        }
+    } else {
+       // no username found
+      $errors[] = $login_failure_msg;
+     }
+
+    $user = find_user_by_username($username);
+    if($user) {
+      if(password_verify($password, $user['hashed_password'])) {
+      // password matches
+      log_in_user($user);
+      redirect_to(url_for('/user.php'));
+    } else {
+      // username found, but password does not match
+      $errors[] = $login_failure_msg;
+    }
+
+  } else {
+    // no username found
+    $errors[] = $login_failure_msg;
+    }
+  }
+}
+
+?>
 
 <?php include(SHARED_PATH . '/data_header.php'); ?>
-<!doctype html>
-
-<html lang="hu">
-	<head>
-		<title>Geo Store</title>
-		<meta charset="utf-8">
-	</head>
-
-	<body>
+<?php echo display_errors($errors); ?>
 
 <div id="content">
-		<form action="<?php echo url_for('/master.php'); ?>" method="post">
-			<h1>Login</h1>
+		<form action="wellcome.php" method="post">
+			<h1>Bejelentkezés</h1>
 
-				<input type="text" name="user_name" value=""/> Username <br/>
-				<input type="text" name="user_pass" value=""/> Password
+				<input type="text" name="username" value="" /> Felhasználónév <br/>
+				<input type="password" name="password" value=""/> Jelszó
 			<div id="operations">
 				<input type="submit" class="submit" value="Login" />
 			</div>
 		</form>
-	</div>
-	<div id="content_reg">
-			<form action="<?php echo url_for('/master.php'); ?>" method="post">
-				<h1>Registration</h1>
-
-					<input type="text" name="name" value="" requireq> Name <br/>
-					<input type="text" name="user_name" value="" required/> Username <br/>
-					<input type="password" name="user_pass" value="" required/> Password <br/>
-					<input type="password" name="user_confirmpass" value="" required/> Confirm password <br/>
-					<input type="email" name="user_email" value="" required/> E-mail <br/>
-					<select id="status">
-								<option value="0"></option>
-								<option value="1">Student</option>
-								<option value="2">Self-employer</option>
-								<option value="3">Retired</option>
-								<option value="4">Company</option>
-							</select>Status
-
-				<div id="operations">
-					<input type="submit" class="submit" value="Login" />
-				</div>
-			</form>
-		</div>
-
-
-	</body>
-</html>
+      <div>
+        <a class="action" href="<?php echo url_for('/registration.php'); ?>">Regisztráció</a>
+      </div>
+    </div>
 
 <?php include(SHARED_PATH . '/data_footer.php'); ?>

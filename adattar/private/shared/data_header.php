@@ -14,7 +14,6 @@
   </head>
 
   <body>
-
     <header>
       <h1>Wellcome to Data Storage</h1>
     </header>
@@ -22,6 +21,9 @@
 // akkor a felhasználó/admin-nak megfelelő felületre térjen vissza           ?>
     <navigation>
       <ul>
-        <li><a href="<?php echo url_for('/master.php'); ?>">Back to Menu</a></li>
+        <li>Felhasználó: <?php echo $_SESSION['username'] ?? ''; ?></li>
+        <li><a href="<?php echo url_for('/master.php'); ?>">Menu</a></li>
       </ul>
     </navigation>
+
+    <?php echo display_session_message(); ?>

@@ -1,4 +1,9 @@
 <?php
+ob_start();
+
+//ez kell a belépés megőrzéséhez
+session_start();
+//minden ami a php kód és maga az oldal működését megkönyíti
 
 define("PRIVATE_PATH", dirname(__FILE__));
 define("PROJECT_PATH", dirname(PRIVATE_PATH));
@@ -12,8 +17,14 @@ define("WWW_ROOT", $doc_root);
 
 require_once('functions.php');
 require_once('database.php');
+require_once('query_functions.php');
+require_once('validation_functions.php');
+require_once('auth_functions.php');
+
 
 $db = db_connect();
+$errors = [];
+
 
 
 ?>

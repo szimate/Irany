@@ -1,41 +1,53 @@
 <?php require_once('../../../private/initialize.php'); ?>
 
 <?php
-  $list = [
-    ['id' => '1', 'position' => '1', 'visible' => '1', 'menu_name' => 'Globe Bank'],
-    ['id' => '2', 'position' => '2', 'visible' => '1', 'menu_name' => 'History'],
-    ['id' => '3', 'position' => '3', 'visible' => '1', 'menu_name' => 'Leadership'],
-    ['id' => '4', 'position' => '4', 'visible' => '1', 'menu_name' => 'Contact Us'],
+
+$lists_set = find_all_lists();
+mysqli_free_result($lists_set);
+
+  $lists = [
+    ['id' => '1', 'lsz' => '1', 'lsz2' => '1', 'title' => 'Globe Bank','author' => 'Nagy Nagy', 'year' => '1957'],
+    ['id' => '2', 'lsz' => '2', 'lsz2' => '1', 'title' => 'History','author' => 'Kovács Bence', 'year' => '1990'],
+    ['id' => '3', 'lsz' => '3', 'lsz2' => '1', 'title' => 'Leadership','author' => 'Bozóki Renáta', 'year' => '1850'],
+    ['id' => '4', 'lsz' => '4', 'lsz2' => '1', 'title' => 'Contact Us','author' => 'Nagy Gábor', 'year' => '1950'],
   ];
 ?>
 
-<?php $page_title = 'List'; ?>
+<?php $page_title = 'Result'; ?>
 <?php include(SHARED_PATH . '/data_header.php'); ?>
 
 <div id="content">
   <div class="listing">
-    <h1>List</h1>
+    <h1>Result</h1>
 
   	<table class="list">
   	  <tr>
         <th>ID</th>
-        <th>Position</th>
-        <th>Visible</th>
-  	    <th>Name</th>
+        <th>Lsz</th>
+        <th>Lsz2</th>
+  	    <th>Title</th>
+        <th>Author</th>
+        <th>Year</th>
+
   	    <th>&nbsp;</th>
   	    <th>&nbsp;</th>
         <th>&nbsp;</th>
   	  </tr>
 
-      <?php foreach($list as $lists) { ?>
+      <?php while($lists as $list) { ?>
         <tr>
           <td><?php echo h($list['id']); ?></td>
-          <td><?php echo h($list['position']); ?></td>
-          <td><?php echo $list['visible'] == 1 ? 'true' : 'false'; ?></td>
-    	    <td><?php echo h($list['menu_name']); ?></td>
+          <td><?php echo h($list['lsz']); ?></td>
+          <td><?php echo h($list['lsz2']); ?></td>
+    	    <td><?php echo h($list['title']); ?></td>
+          <td><?php echo h($list['author']); ?></td>
+          <td><?php echo h($list['year']); ?></td>
         </tr>
       <?php } ?>
   	</table>
+<?php
+// mysqli_free_result($lists_set);
+?>
 
   </div>
 
