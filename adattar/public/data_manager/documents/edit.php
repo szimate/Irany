@@ -31,6 +31,7 @@ if(is_post_request()) {
   $document["vizsgalat"] = $_POST['vizsgalat'] ?? '';;
   $document["adattar"] = $_POST['adattar'] ?? '';;
   $document["letrehozta"] = $_POST['letrehozta'] ?? '';;
+  $document["hozzaadta"] = $_POST['hozzaadta'] ?? '';;
 
 
   $result = update_document($document);
@@ -124,8 +125,12 @@ mysqli_free_result($document_set);
   <dt>Létrehozta</dt>
   <dd><input type="text" name="letrehozta" value="<?php echo h($document['letrehozta']); ?>" readonly /></dd>
 </dl>
+<dl>
+  <dt>Hozzáadva</dt>
+  <dd><input type="text" name="hozzaadva" value="<?php echo h($document['hozzaadva']); ?>" readonly /></dd>
+</dl>
       <div id="operations">
-        <input type="submit" value="Mentés" />
+        <input type="submit" class="nyomogomb" value="Mentés" />
       </div>
     </form>
 

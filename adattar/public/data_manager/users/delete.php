@@ -4,39 +4,36 @@ require_once('../../../private/initialize.php');
 
 require_login();
 
-
-require_login();
-
 if(!isset($_GET['id'])) {
-  redirect_to(url_for('/data_manager/admins/index.php'));
+  redirect_to(url_for('/data_manager/users/index.php'));
 }
 $id = $_GET['id'];
 
 if(is_post_request()) {
-  $result = delete_admin($id);
-  $_SESSION['message'] = 'Admin törölve.';
-  redirect_to(url_for('/data_manager/admins/index.php'));
+  $result = delete_user($id);
+  $_SESSION['message'] = 'Felhasználó törölve.';
+  redirect_to(url_for('/data_manager/users/index.php'));
 } else {
-  $admin = find_admin_by_id($id);
+  $user = find_user_by_id($id);
 }
 
 ?>
 
-<?php $page_title = 'Admin törlése'; ?>
+<?php $page_title = 'Felhsználó törlése'; ?>
 <?php include(SHARED_PATH . '/data_header.php'); ?>
 
 <div id="content">
 
-  <a class="back-link" href="<?php echo url_for('/data_manager/admins/index.php'); ?>">&laquo; Vissza a listához</a>
+  <a class="back-link" href="<?php echo url_for('/data_manager/users/index.php'); ?>">&laquo; Vissza a listához</a>
 
   <div class="admin delete">
-    <h1>Admin törlése</h1>
-    <p>Are you sure you want to delete this admin?</p>
-    <p class="item"><?php echo h($admin['username']); ?></p>
+    <h1>Felhasználó törlése</h1>
+    <p>Biztos szeretnéd törölni a felhasználót?</p>
+    <p class="item"><?php echo h($user['username']); ?></p>
 
-    <form action="<?php echo url_for('/data_manager/admins/delete.php?id=' . h(u($admin['id']))); ?>" method="post">
+    <form action="<?php echo url_for('/data_manager/users/delete.php?id=' . h(u($user['id']))); ?>" method="post">
       <div id="operations">
-        <input type="submit" name="commit" value="Admin törlése" />
+        <input type="submit" class="nyomogomb" value="Felhasználó törlése" />
       </div>
     </form>
   </div>

@@ -4,9 +4,6 @@ require_once('../../../private/initialize.php');
 
 require_login();
 
-
-require_login();
-
 if(!isset($_GET['id'])) {
   redirect_to(url_for('/data_manager/admins/index.php'));
 }
@@ -36,7 +33,7 @@ if(is_post_request()) {
 
     <form action="<?php echo url_for('/data_manager/admins/delete.php?id=' . h(u($admin['id']))); ?>" method="post">
       <div id="operations">
-        <input type="submit" name="commit" value="Admin törlése" />
+        <input type="submit" class="nyomogomb" value="Admin törlése" />
       </div>
     </form>
   </div>

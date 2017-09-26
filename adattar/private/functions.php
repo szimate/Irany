@@ -1,7 +1,6 @@
 <?php
 
 //az elemekhez használt függvények
-
 //htmlspecialchars security function
 function h($string="") {
   return htmlspecialchars($string);
@@ -60,6 +59,10 @@ function display_session_message() {
   if(!is_blank($msg)) {
     return '<div id="message">' . h($msg) . '</div>';
   }
+}
+function current_time() {
+  $date = $_SERVER['REQUEST_TIME'];
+  return $date('Y-m-d H:i:s', storetime($date));
 }
 
 ?>

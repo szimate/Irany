@@ -27,7 +27,7 @@ if(is_post_request()) {
   $document["vizsgalat"] = $_POST['vizsgalat'] ?? '';;
   $document["adattar"] = $_POST['adattar'] ?? '';;
   $document["letrehozta"] = $_SESSION['username'] ?? '';;
-  $document["datum"] =
+  $document["hozzaadva"] = $_POST['hozzaadva'] ?? '' ;;
 
   $result = insert_document($document);
   if($result === true) {
@@ -136,14 +136,14 @@ if(is_post_request()) {
 </dl>
 <dl>
   <dt>Létrehozta</dt>
-  <dd><input type="text" name="letrehozta" value="<?php echo h($_SESSION['username']); ?>" readonly /></dd>
+  <dd><?php echo h($_SESSION['username']); ?></dd>
 </dl>
 <dl>
   <dt>Dátum</dt>
-  <dd><input type="datetime" name="datum" value="<?php echo h(date("Y-m-d H:i:s")); ?>" readonly /></dd>
+  <dd><input type="datetime" name="hozzaadva" value="<?php echo h(date("Y-m-d H:i:s")); ?>" readonly /></dd>
 </dl>
       <div id="operations">
-        <input type="submit" value="Dokumentum létrehozása" />
+        <input type="submit" class="nyomogomb" value="Dokumentum létrehozása" />
       </div>
     </form>
 

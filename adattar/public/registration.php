@@ -72,13 +72,10 @@ if(is_post_request()) {
                 Passwords should be at least 12 characters and include at least one uppercase letter, lowercase letter, number, and symbol.
               </p>
 				<div id="operations">
-					<input type="submit" class="submit" value="Regisztrálok!" />
+					<input type="submit" class="nyomogomb" value="Regisztrálok!" />
 				</div>
 			</form>
 		</div>
 </div>
-
-	</body>
-</html>
 
 <?php include(SHARED_PATH . '/data_footer.php'); ?>

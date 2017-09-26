@@ -3,8 +3,6 @@
 function log_in() {
   return;
 }
-
-
   // is_blank('abcd')
   // * validate data presence
   // * uses trim() so empty spaces don't count
@@ -13,7 +11,6 @@ function log_in() {
   function is_blank($value) {
     return !isset($value) || trim($value) === '';
   }
-
   // has_presence('abcd')
   // * validate data presence
   // * reverse of is_blank()
@@ -21,7 +18,6 @@ function log_in() {
   function has_presence($value) {
     return !is_blank($value);
   }
-
   // has_length_greater_than('abcd', 3)
   // * validate string length
   // * spaces count towards length
@@ -30,7 +26,6 @@ function log_in() {
     $length = strlen($value);
     return $length > $min;
   }
-
   // has_length_less_than('abcd', 5)
   // * validate string length
   // * spaces count towards length
@@ -39,7 +34,6 @@ function log_in() {
     $length = strlen($value);
     return $length < $max;
   }
-
   // has_length_exactly('abcd', 4)
   // * validate string length
   // * spaces count towards length
@@ -48,7 +42,6 @@ function log_in() {
     $length = strlen($value);
     return $length == $exact;
   }
-
   // has_length('abcd', ['min' => 3, 'max' => 5])
   // * validate string length
   // * combines functions_greater_than, _less_than, _exactly

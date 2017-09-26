@@ -84,6 +84,10 @@ $document = find_document_by_id($id);
   <dt>Létrehozta</dt>
   <dd><?php echo h($document['letrehozta']); ?></dd>
 </dl>
+<dl>
+  <dt>Hozzáadva</dt>
+  <dd><?php echo h($document['hozzaadva']); ?></dd>
+</dl>
     </div>
 
   </div>

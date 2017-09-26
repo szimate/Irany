@@ -1,5 +1,7 @@
 <?php require_once('../private/initialize.php');
 
+//TODO registry verification
+
 $errors = [];
 $username = '';
 $password = '';
@@ -67,7 +69,7 @@ if(is_post_request()) {
 				<input type="text" name="username" value="" /> Felhasználónév <br/>
 				<input type="password" name="password" value=""/> Jelszó
 			<div id="operations">
-				<input type="submit" class="submit" value="Login" />
+				<input type="submit" class="nyomogomb" value="Login" />
 			</div>
 		</form>
       <div>

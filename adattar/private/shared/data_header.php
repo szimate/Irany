@@ -17,13 +17,14 @@
     <header>
       <h1>Wellcome to Data Storage</h1>
     </header>
-<?php   // itt még kikell találni hogy ha a menü gombra megyünk
-// akkor a felhasználó/admin-nak megfelelő felületre térjen vissza           ?>
+
+<?php echo display_session_message(); ?>
+
     <navigation>
       <ul>
         <li>Felhasználó: <?php echo $_SESSION['username'] ?? ''; ?></li>
         <li><a href="<?php echo url_for('/master.php'); ?>">Menu</a></li>
       </ul>
     </navigation>
-
-    <?php echo display_session_message(); ?>
+</body>
+</html>

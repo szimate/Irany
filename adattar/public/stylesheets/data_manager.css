@@ -78,6 +78,14 @@ navigation ul li {
   text-align: center;
   background-color: orange;
 }
+#message {
+  color: green;
+  display: inline-block;
+  border: 2px solid green;
+  padding: 1em;
+  margin-bottom: 1em;
+  font-weight: bold;
+}
 
 footer {
   width: 980px;
@@ -87,12 +95,48 @@ footer {
   background: orange;
   color: white;
 }
+/* Button */
+
+.nyomogomb, a {
+  background-color: white;
+
+  color: black;
+  padding: 16px 30px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  margin: 14px 12px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.8s ease;
+
+}
+.nyomogomb:hover, a:hover {
+  background-color: orange;
+  color: white;
+
+}
 
 
 /* Actions */
 
+/*a {
+  background-color: orange;
+  color: white;
+  padding: 12px 17px;
+  text-decoration: none;
+  text-align: center;
+  display: inline-block;
+  font-weight: bold;
+}
+a:hover {
+
+}
+*/
 .actions {
   margin-bottom: 1em;
+
 }
 
 

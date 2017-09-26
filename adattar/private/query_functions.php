@@ -86,7 +86,7 @@
     $sql .= "(leltari_szam1, leltari_szam2, cim, ";
     $sql .= "szerzo, ev, szoveg, terkep, szelveny, ";
     $sql .= "tablazat, abra, foto, melleklet, retegsor, ";
-    $sql .= "diagram, vizsgalat, adattar, letrehozta) ";
+    $sql .= "diagram, vizsgalat, adattar, letrehozta, hozzaadva) ";
     $sql .= "VALUES (";
     $sql .= "'" . db_escape($db, $document['leltari_szam1']) . "',";
     $sql .= "'" . db_escape($db, $document['leltari_szam2']) . "',";
@@ -104,8 +104,8 @@
     $sql .= "'" . db_escape($db, $document['diagram']) . "',";
     $sql .= "'" . db_escape($db, $document['vizsgalat']) . "',";
     $sql .= "'" . db_escape($db, $document['adattar']) . "',";
-    $sql .= "'" . db_escape($db, $document['letrehozta']) . "'";
-
+    $sql .= "'" . db_escape($db, $document['letrehozta']) . "',";
+    $sql .= "'" . db_escape($db, $document['hozzaadva']) . "'";
 
     $sql .= ")";
     $result = mysqli_query($db, $sql);
@@ -362,14 +362,13 @@
       $hashed_password = password_hash($user['password'], PASSWORD_BCRYPT);
 
       $sql = "INSERT INTO users ";
-      $sql .= "(first_name, last_name, email, username, hashed_password, level) ";
+      $sql .= "(first_name, last_name, email, username, hashed_password) ";
       $sql .= "VALUES (";
       $sql .= "'" . db_escape($db, $user['first_name']) . "',";
       $sql .= "'" . db_escape($db, $user['last_name']) . "',";
       $sql .= "'" . db_escape($db, $user['email']) . "',";
       $sql .= "'" . db_escape($db, $user['username']) . "',";
-      $sql .= "'" . db_escape($db, $hashed_password) . "',";
-      $sql .= " '1' ";
+      $sql .= "'" . db_escape($db, $hashed_password) . "' ";
       $sql .= ")";
       $result = mysqli_query($db, $sql);
       // For INSERT statements, $result is true/false
@@ -385,19 +384,19 @@
     function validate_users($user) {
 
       if(is_blank($user['first_name'])) {
-        $errors[] = "First name cannot be blank.";
+        $errors[] = "A vezetéknév megadása kötelező..";
       } elseif (!has_length($user['first_name'], array('min' => 2, 'max' => 255))) {
-        $errors[] = "First name must be between 2 and 255 characters.";
+        $errors[] = "A keresztnev legalább 2 legfeljebb 255 karakter hosszúságú lehet.";
       }
 
       if(is_blank($user['last_name'])) {
-        $errors[] = "Last name cannot be blank.";
+        $errors[] = "A keresztnev megadása kötelező.";
       } elseif (!has_length($user['last_name'], array('min' => 2, 'max' => 255))) {
-        $errors[] = "Last name must be between 2 and 255 characters.";
+        $errors[] = "A vezetéknév legalább 2 legfeljebb 255 karakter hosszúságú leht.";
       }
 
       if(is_blank($user['email'])) {
-        $errors[] = "Email cannot be blank.";
+        $errors[] = "Email cím megadása kötelező.";
       } elseif (!has_length($user['email'], array('max' => 255))) {
         $errors[] = "Last name must be less than 255 characters.";
       } elseif (!has_valid_email_format($user['email'])) {
@@ -405,17 +404,17 @@
       }
 
       if(is_blank($user['username'])) {
-        $errors[] = "Username cannot be blank.";
+        $errors[] = "Felhasználónév megadása kötelező.";
       } elseif (!has_length($user['username'], array('min' => 4, 'max' => 255))) {
         $errors[] = "Username must be between 4 and 255 characters.";
       } elseif (!has_unique_username($user['username'], $user['id'] ?? 0)) {
-        $errors[] = "Username not allowed. Try another.";
+        $errors[] = "Felhasználónév nem megengedett. Próbálj másikat!";
       }
 
       if(is_blank($user['password'])) {
-        $errors[] = "Password cannot be blank.";
+        $errors[] = "Jelszó megadása kötelező.";
       } elseif (!has_length($user['password'], array('min' => 12))) {
-        $errors[] = "Password must contain 12 or more characters";
+        $errors[] = "A jelszónak 12 karakternél hosszabbnak kell lennie.";
       } elseif (!preg_match('/[A-Z]/', $user['password'])) {
         $errors[] = "Password must contain at least 1 uppercase letter";
       } elseif (!preg_match('/[a-z]/', $user['password'])) {
@@ -445,4 +444,67 @@
       mysqli_free_result($result);
       return $username; // returns an assoc. array
   }
+  function find_all_users() {
+    global $db;
+
+    $sql = "SELECT * FROM users ";
+    $sql .= "ORDER BY first_name DESC, last_name DESC";
+    $result = mysqli_query($db, $sql);
+    confirm_result_set($result);
+    return $result;
+  }
+  function delete_user($user) {
+    global $db;
+
+    $sql = "DELETE FROM users ";
+    $sql .= "WHERE id='" . db_escape($db, $user['id']) . "' ";
+    $sql .= "LIMIT 1;";
+    $result = mysqli_query($db, $sql);
+
+    // For DELETE statements, $result is true/false
+    if($result) {
+      return true;
+    } else {
+      // DELETE failed
+      echo mysqli_error($db);
+      db_disconnect($db);
+      exit;
+    }
+  }
+
+  function find_user_by_id($id) {
+    global $db;
+
+    $sql = "SELECT * FROM users ";
+    $sql .= "WHERE id='" . db_escape($db, $id) . "' ";
+    $sql .= "LIMIT 1";
+    $result = mysqli_query($db, $sql);
+    confirm_result_set($result);
+    $user = mysqli_fetch_assoc($result); // find first
+    mysqli_free_result($result);
+    return $user; // returns an assoc. array
+  }
+  function select_from_dokumentum($leltari_szam) {
+    global $db;
+
+    $sql="select a.*, group_concat(distinct concat(' ',b.nev)),
+group_concat(distinct concat(' ',e.name)),
+group_concat(distinct concat(' ',g.name))
+from dokumentum a
+left join dok_ceg c
+inner join ceg b on c.ceg_id = b.id
+on a.id = c.dok_id
+left join dok_taj d
+inner join taj e on e.code = d.tajkod
+on a.id = d.dok_id
+left join dok_eto f
+inner join eto g on g.code = f.eto_kod
+on a.id = f.dok_id
+where a.leltari_szam1 ='". db_escape($leltari_szam) ."'";
+  $result = mysqli_query($db, $sql);
+  confirm_result_set($result);
+  $data = mysqli_fetch_assoc($result); // find first
+  mysqli_free_result($result);
+  return $data; // returns an assoc. array
+}
 ?>

@@ -81,7 +81,7 @@ if(is_post_request()) {
       <br />
 
       <div id="operations">
-        <input type="submit" value="Admin szerkesztése" />
+        <input type="submit" class="nyomogomb" value="Admin szerkesztése" />
       </div>
     </form>
 

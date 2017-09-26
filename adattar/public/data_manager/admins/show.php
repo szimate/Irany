@@ -20,12 +20,7 @@ $admin = find_admin_by_id($id);
   <div class="admin show">
 
     <h1>Admin: <?php echo h($admin['username']); ?></h1>
-
-    <div class="actions">
-      <a class="action" href="<?php echo url_for('/data_manager/admins/edit.php?id=' . h(u($admin['id']))); ?>">Szerkeztés</a>
-      <a class="action" href="<?php echo url_for('/data_manager/admins/delete.php?id=' . h(u($admin['id']))); ?>">Törlés</a>
-    </div>
-
+    
     <div class="attributes">
       <dl>
         <dt>First name</dt>

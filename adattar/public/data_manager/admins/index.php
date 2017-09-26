@@ -1,7 +1,5 @@
 <?php
 
-
-
 //ez az oldal felépítéséhez alapvető paracsokat tartalmazza(függvények, adatbázis csatlakozás, adatbázis lekérdezések)
 require_once('../../../private/initialize.php');
 

@@ -33,7 +33,7 @@ if(is_post_request()) {
 
     <form action="<?php echo url_for('/data_manager/documents/delete.php?id=' . h(u($document['id']))); ?>" method="post">
       <div id="operations">
-        <input type="submit" name="commit" value="Törlés" />
+        <input type="submit" class="nyomogomb" value="Törlés" />
       </div>
     </form>
   </div>
