@@ -15,7 +15,7 @@ $document = find_document_by_id($id);
 
 <div id="content">
 
-  <a class="back-link" href="<?php echo url_for('/data_manager/documents/index.php'); ?>" &laquo;> Vissza a listához</a>
+  <a class="back-link" href="<?php echo url_for('/data_manager/search/index.php'); ?>" &laquo;> Vissza a listához</a>
 
   <div class="document show">
 

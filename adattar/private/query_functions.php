@@ -471,7 +471,6 @@
       exit;
     }
   }
-
   function find_user_by_id($id) {
     global $db;
 
@@ -484,27 +483,5 @@
     mysqli_free_result($result);
     return $user; // returns an assoc. array
   }
-  function select_from_dokumentum($leltari_szam) {
-    global $db;
-
-    $sql="select a.*, group_concat(distinct concat(' ',b.nev)),
-group_concat(distinct concat(' ',e.name)),
-group_concat(distinct concat(' ',g.name))
-from dokumentum a
-left join dok_ceg c
-inner join ceg b on c.ceg_id = b.id
-on a.id = c.dok_id
-left join dok_taj d
-inner join taj e on e.code = d.tajkod
-on a.id = d.dok_id
-left join dok_eto f
-inner join eto g on g.code = f.eto_kod
-on a.id = f.dok_id
-where a.leltari_szam1 ='". db_escape($leltari_szam) ."'";
-  $result = mysqli_query($db, $sql);
-  confirm_result_set($result);
-  $data = mysqli_fetch_assoc($result); // find first
-  mysqli_free_result($result);
-  return $data; // returns an assoc. array
-}
+  
 ?>
