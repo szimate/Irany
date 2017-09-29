@@ -49,6 +49,7 @@ if(is_post_request()) {
 $document_set = find_all_documents();
 $document_count = mysqli_num_rows($document_set);
 mysqli_free_result($document_set);
+
 ?>
 
 <?php $page_title = 'Dokumentum szerkesztés'; ?>
@@ -71,6 +72,10 @@ mysqli_free_result($document_set);
       <dl>
         <dt>Leltári szám 2</dt>
         <dd><input type="text" name="leltari_szam2" value="<?php echo h($document['leltari_szam2']); ?>" /></dd>
+      </dl>
+      <dl>
+        <dt>Szerző</dt>
+        <dd><input type="text" name="szerzo" value="<?php echo h($document['szerzo']); ?>" /></dd>
       </dl>
       <dl>
         <dt>Cím</dt>

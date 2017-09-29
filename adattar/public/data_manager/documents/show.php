@@ -15,7 +15,7 @@ $document = find_document_by_id($id);
 
 <div id="content">
 
-  <a class="back-link" href="<?php echo url_for('/data_manager/search/index.php'); ?>" &laquo;> Vissza a listához</a>
+  <a class="back-link" href="<?php echo url_for('/data_manager/documents/index.php'); ?>" &laquo;> Vissza a listához</a>
 
   <div class="document show">
 
@@ -29,6 +29,10 @@ $document = find_document_by_id($id);
       <dl>
       <dt>Leltári szám 2</dt>
         <dd><?php echo h($document['leltari_szam2']); ?></dd>
+      </dl>
+      <dl>
+        <dt>Szerző</dt>
+        <dd><?php echo h($document['szerzo']); ?></dd>
       </dl>
       <dl>
         <dt>Cím</dt>
@@ -89,7 +93,5 @@ $document = find_document_by_id($id);
   <dd><?php echo h($document['hozzaadva']); ?></dd>
 </dl>
     </div>
-
   </div>
-
 </div>

@@ -1,52 +1,66 @@
 <?php
-// külön kell minden mappára
-  // documents
+
+//dokumentumok
 
   function find_all_documents($options=[]) {
-    // adatbázis kapcsolat
     global $db;
-    // megjelenik e vagy csak admin láthatja
-    /*ez nem feltétlen kell*/   $visible = $options['visible'] ?? false;
-    // adatbázis lekérdezés
-    // a documents nevő táblából növekvőbe rendezve
-    $sql = "SELECT * FROM documents ";
+
+    $visible = $options['visible'] ?? false;
+    $sql = "SELECT * FROM dokumentum ";
     if($visible) {
       $sql .= "WHERE visible = true ";
     }
-    $sql .= "ORDER BY id DESC";
-    // a db szerveren keres az sql feltételek alapján
+    $sql .= "ORDER BY id DESC ";
+    $sql .= "LIMIT 10";
+
     $result = mysqli_query($db, $sql);
     confirm_result_set($result);
     return $result;
   }
+  function find_document_by_leltari_szam($leltari_szam) {
+    global $db;
+
+    $sql = "select a.*, group_concat(distinct concat(' ',b.nev)), ";
+    $sql .= "group_concat(distinct concat(' ',e.name)), ";
+    $sql .= "group_concat(distinct concat(' ',g.name)) ";
+    $sql .= "from dokumentum a ";
+    $sql .= "left join dok_ceg c ";
+    $sql .= "inner join ceg b on c.ceg_id = b.id ";
+    $sql .= "on a.id = c.dok_id ";
+    $sql .= "left join dok_taj d ";
+    $sql .= "inner join taj e on e.code = d.tajkod ";
+    $sql .= "on a.id = d.dok_id ";
+    $sql .= "left join dok_eto f ";
+    $sql .= "inner join eto g on g.code = f.eto_kod ";
+    $sql .= "on a.id = f.dok_id ";
+    $sql .= "where a.leltari_szam1 ='" . db_escape($db, $leltari_szam) . "'";
+
+    $result = mysqli_query($db, $sql);
+    confirm_result_set($result);
+    $document = mysqli_fetch_assoc($result);
+    mysqli_free_result($result);
+    return $document;
+
+  }
 
   function find_document_by_id($id, $options=[]) {
     global $db;
-    // a view nézethez szükséges
+
     $visible = $options['visible'] ?? false;
 
-    $sql = "SELECT * FROM documents ";
+    $sql = "SELECT * FROM dokumentum ";
     $sql .= "WHERE id='" . db_escape($db, $id) . "' ";
     if($visible) {
       $sql .= "AND visible = true";
     }
-    // az eredmény tárolása a $result változóban
     $result = mysqli_query($db, $sql);
-    // változó ellenőrzése
     confirm_result_set($result);
-    // a $document változóban eltároljuk array formájában a $result-ot
     $document = mysqli_fetch_assoc($result);
-    //felszabadítás
     mysqli_free_result($result);
     return $document;
-    // array visszaadása
   }
-    // őt csak akkor jelenik meg ha hiba van
   function validate_document($document) {
     $errors = [];
-    //az adatlap formai követelményei
-    // ha üres
-    // ha rövid vagy túl hosszú
     if (is_blank($document['leltari_szam1'])) {
       $errors[] = "A leltári szám 1 mező nem lehet üresen.";
     }
@@ -56,11 +70,7 @@
       $errors[] = "A cím hossza legalább 2 karakter és maximum 255 hosszú lehet.";
     }
 
-
-    // csak szám lehet a bemenet
     $postion_int = (int) $document['ev'];
-    //$postion_int = (int) $document['szoveg'];
-    //$postion_int = (int) $document['terkep'];
 
     if($postion_int <= 0) {
       $errors[] = "Az év nem lehet kisebb mint 0.";
@@ -73,25 +83,23 @@
     }
     return $errors;
   }
-  //new page itt adjuk hozzá az új elemeket
   function insert_document($document) {
     global $db;
-    //ellenörzi jó e a bevitel
+
     $errors = validate_document($document);
     if(!empty($errors)) {
       return $errors;
     }
-    //hová adjuk hozzá
-    $sql = "INSERT INTO documents ";
-    $sql .= "(leltari_szam1, leltari_szam2, cim, ";
-    $sql .= "szerzo, ev, szoveg, terkep, szelveny, ";
+    $sql = "INSERT INTO dokumentum ";
+    $sql .= "(leltari_szam1, leltari_szam2, ";
+    $sql .= "szerzo, cim, ev, szoveg, terkep, szelveny, ";
     $sql .= "tablazat, abra, foto, melleklet, retegsor, ";
     $sql .= "diagram, vizsgalat, adattar, letrehozta, hozzaadva) ";
     $sql .= "VALUES (";
     $sql .= "'" . db_escape($db, $document['leltari_szam1']) . "',";
     $sql .= "'" . db_escape($db, $document['leltari_szam2']) . "',";
-    $sql .= "'" . db_escape($db, $document['cim']) . "',";
     $sql .= "'" . db_escape($db, $document['szerzo']) . "',";
+    $sql .= "'" . db_escape($db, $document['cim']) . "',";
     $sql .= "'" . db_escape($db, $document['ev']) . "',";
     $sql .= "'" . db_escape($db, $document['szoveg']) . "',";
     $sql .= "'" . db_escape($db, $document['terkep']) . "',";
@@ -106,34 +114,31 @@
     $sql .= "'" . db_escape($db, $document['adattar']) . "',";
     $sql .= "'" . db_escape($db, $document['letrehozta']) . "',";
     $sql .= "'" . db_escape($db, $document['hozzaadva']) . "'";
-
     $sql .= ")";
+
     $result = mysqli_query($db, $sql);
 
-    // For INSERT statements, $result is true/false
     if($result) {
       return true;
     } else {
-      // INSERT failed
       echo mysqli_error($db);
       db_disconnect($db);
       exit;
     }
   }
-  // frissítés ha valami változna
   function update_document($document) {
     global $db;
-    // ellenörzés hogy jók e a beviteli formák
+
     $errors = validate_document($document);
     if(!empty($errors)) {
       return $errors;
     }
 
-    $sql = "UPDATE documents SET ";
+    $sql = "UPDATE dokumentum SET ";
     $sql .= "leltari_szam1='" . db_escape($db, $document['leltari_szam1']) . "', ";
     $sql .= "leltari_szam2='" . db_escape($db, $document['leltari_szam2']) . "', ";
-    $sql .= "cim='" . db_escape($db, $document['cim']) . "',";
     $sql .= "szerzo='" . db_escape($db, $document['szerzo']) . "',";
+    $sql .= "cim='" . db_escape($db, $document['cim']) . "',";
     $sql .= "ev='" . db_escape($db, $document['ev']) . "',";
     $sql .= "szoveg='" . db_escape($db, $document['szoveg']) . "',";
     $sql .= "terkep='" . db_escape($db, $document['terkep']) . "',";
@@ -150,18 +155,15 @@
     $sql .= "LIMIT 1";
 
     $result = mysqli_query($db, $sql);
-    // For UPDATE statements, $result is true/false
     if($result) {
       return true;
     } else {
-      // UPDATE failed
       echo mysqli_error($db);
       db_disconnect($db);
       exit;
     }
 
   }
-  // törlés
   function delete_document($id) {
     global $db;
 
@@ -170,18 +172,17 @@
     $sql .= "LIMIT 1";
     $result = mysqli_query($db, $sql);
 
-    // For DELETE statements, $result is true/false
     if($result) {
       return true;
     } else {
-      // DELETE failed
       echo mysqli_error($db);
       db_disconnect($db);
       exit;
     }
   }
 
-  // lekérdezi az adminokat, kiírás az index.php-n
+//admins
+
   function find_all_admins() {
     global $db;
 
@@ -200,9 +201,9 @@
     $sql .= "LIMIT 1";
     $result = mysqli_query($db, $sql);
     confirm_result_set($result);
-    $admin = mysqli_fetch_assoc($result); // find first
+    $admin = mysqli_fetch_assoc($result);
     mysqli_free_result($result);
-    return $admin; // returns an assoc. array
+    return $admin;
   }
 
   function validate_admin($admin) {
@@ -254,10 +255,8 @@
     } elseif ($admin['password'] !== $admin['confirm_password']) {
       $errors[] = "Password and confirm password must match.";
     }
-
     return $errors;
   }
-  //új admin
   function insert_admin($admin) {
     global $db;
 
@@ -279,11 +278,9 @@
     $sql .= ")";
     $result = mysqli_query($db, $sql);
 
-    // For INSERT statements, $result is true/false
     if($result) {
       return true;
     } else {
-      // INSERT failed
       echo mysqli_error($db);
       db_disconnect($db);
       exit;
@@ -310,11 +307,9 @@
     $sql .= "LIMIT 1";
     $result = mysqli_query($db, $sql);
 
-    // For UPDATE statements, $result is true/false
     if($result) {
       return true;
     } else {
-      // UPDATE failed
       echo mysqli_error($db);
       db_disconnect($db);
       exit;
@@ -324,16 +319,16 @@
   function delete_admin($admin) {
     global $db;
 
+
+
     $sql = "DELETE FROM admins ";
     $sql .= "WHERE id='" . db_escape($db, $admin['id']) . "' ";
     $sql .= "LIMIT 1;";
     $result = mysqli_query($db, $sql);
 
-    // For DELETE statements, $result is true/false
-    if($result) {
+  if($result) {
       return true;
     } else {
-      // DELETE failed
       echo mysqli_error($db);
       db_disconnect($db);
       exit;
@@ -342,15 +337,20 @@
   function find_admin_by_username($username) {
     global $db;
 
+
+
     $sql = "SELECT * FROM admins ";
     $sql .= "WHERE username='" . db_escape($db, $username) . "' ";
     $sql .= "LIMIT 1";
     $result = mysqli_query($db, $sql);
     confirm_result_set($result);
-    $admin = mysqli_fetch_assoc($result); // find first
+    $admin = mysqli_fetch_assoc($result);
     mysqli_free_result($result);
-    return $admin; // returns an assoc. array
+    return $admin;
 }
+
+//users
+
     function insert_users($user) {
       global $db;
 
@@ -371,11 +371,9 @@
       $sql .= "'" . db_escape($db, $hashed_password) . "' ";
       $sql .= ")";
       $result = mysqli_query($db, $sql);
-      // For INSERT statements, $result is true/false
       if($result) {
         return true;
       } else {
-        // INSERT failed
         echo mysqli_error($db);
         db_disconnect($db);
         exit;
@@ -435,17 +433,21 @@
     function find_user_by_username($username) {
       global $db;
 
+
+
       $sql = "SELECT * FROM users ";
       $sql .= "WHERE username='" . db_escape($db, $username) . "' ";
       $sql .= "LIMIT 1";
       $result = mysqli_query($db, $sql);
       confirm_result_set($result);
-      $username = mysqli_fetch_assoc($result); // find first
+      $username = mysqli_fetch_assoc($result);
       mysqli_free_result($result);
-      return $username; // returns an assoc. array
+      return $username;
   }
   function find_all_users() {
     global $db;
+
+
 
     $sql = "SELECT * FROM users ";
     $sql .= "ORDER BY first_name DESC, last_name DESC";
@@ -456,16 +458,16 @@
   function delete_user($user) {
     global $db;
 
+
+
     $sql = "DELETE FROM users ";
     $sql .= "WHERE id='" . db_escape($db, $user['id']) . "' ";
     $sql .= "LIMIT 1;";
     $result = mysqli_query($db, $sql);
 
-    // For DELETE statements, $result is true/false
     if($result) {
       return true;
     } else {
-      // DELETE failed
       echo mysqli_error($db);
       db_disconnect($db);
       exit;
@@ -474,14 +476,15 @@
   function find_user_by_id($id) {
     global $db;
 
+
+
     $sql = "SELECT * FROM users ";
     $sql .= "WHERE id='" . db_escape($db, $id) . "' ";
     $sql .= "LIMIT 1";
     $result = mysqli_query($db, $sql);
     confirm_result_set($result);
-    $user = mysqli_fetch_assoc($result); // find first
+    $user = mysqli_fetch_assoc($result);
     mysqli_free_result($result);
-    return $user; // returns an assoc. array
+    return $user;
   }
-  
 ?>

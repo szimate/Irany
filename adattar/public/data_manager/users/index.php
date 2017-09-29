@@ -4,12 +4,11 @@
 require_once('../../../private/initialize.php');
 require_login();
 //ez megkeresi az összes admint az adatbázisból
+
 $user_set = find_all_users(); //
-?>
-<?php
 //ez mindíg az aktuális oldal címét írja ki a böngészőben
- $page_title = 'Users'; ?>
-<?php
+ $page_title = 'Users';
+
 //a parancsa a rövidebb elérési utat biztosítja(fejléc általános használata)
 include(SHARED_PATH . '/data_header.php'); ?>
 
@@ -24,8 +23,8 @@ include(SHARED_PATH . '/data_header.php'); ?>
         <th>Keresztnév</th>
         <th>Email</th>
         <th>Felhasználónév</th>
+        <th>Törlés</th>
         <th>&nbsp;</th>
-
       </tr>
 
       <?php /*TODO*/ while($user = mysqli_fetch_assoc($user_set)) { ?>

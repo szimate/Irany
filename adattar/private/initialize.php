@@ -1,6 +1,5 @@
 <?php
 ob_start();
-
 //ez kell a belépés megőrzéséhez
 session_start();
 //minden ami a php kód és maga az oldal működését megkönyíti

@@ -21,8 +21,9 @@ $document_set = find_all_documents();
   	<table class="list">
   	  <tr>
         <th>ID</th>
-        <th>Leltári szám 1</th>
-        <th>Leltari szam 2</th>
+        <th>Leltári szám </th>
+        <th>Leltari szam (2)</th>
+        <th>Szerző</th>
         <th>Cím</th>
         <th>Év</th>
         <th>Adattar</th>
@@ -36,6 +37,7 @@ $document_set = find_all_documents();
           <td><?php echo h($document['id']); ?></td>
           <td><?php echo h($document['leltari_szam1']); ?></td>
           <td><?php echo h($document['leltari_szam2']); ?></td>
+          <td><?php echo h($document['szerzo']); ?></td>
           <td><?php echo h($document['cim']); ?></td>
           <td><?php echo h($document['ev']); ?></td>
           <td><?php echo h($document['adattar']); ?></td>

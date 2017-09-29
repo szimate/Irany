@@ -12,8 +12,8 @@ if(is_post_request()) {
   $document = [];
   $document['leltari_szam1'] = $_POST['leltari_szam1'] ?? '';
   $document["leltari_szam2"] = $_POST['leltari_szam2'] ?? '';;
-  $document["cim"] = $_POST['cim'] ?? '';;
   $document["szerzo"] = $_POST['szerzo'] ?? '';;
+  $document["cim"] = $_POST['cim'] ?? '';;
   $document["ev"] = $_POST['ev'] ?? '';;
   $document["szoveg"] = $_POST['szoveg'] ?? '';;
   $document["terkep"] = $_POST['terkep'] ?? '';;
@@ -43,6 +43,7 @@ if(is_post_request()) {
   $document = [];
   $document["leltari_szam1"] = '';
   $document["leltari_szam2"] = '';
+  $document["szerzo"] = '';
   $document["cim"] = '';
   $document["szerzo"] = '';
   $document["ev"] = '';
@@ -84,6 +85,10 @@ if(is_post_request()) {
       <dl>
         <dt>Leltári szám 2</dt>
         <dd><input type="text" name="leltari_szam2" value="<?php echo h($document['leltari_szam2']); ?>" /></dd>
+      </dl>
+      <dl>
+        <dt>Szerző</dt>
+        <dd><input type="text" name="szerzo" value="<?php echo h($document['szerzo']); ?>" /></dd>
       </dl>
       <dl>
         <dt>Cím</dt>

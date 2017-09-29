@@ -19,28 +19,46 @@ require_login();
 
 <?php
 
-  $documentum_set = find_all_documents();
+  mysqli_set_charset($db, 'utf8');
 
   if (isset($_POST["leltari_szam"])) {
+
   $leltari_szam = $_POST["leltari_szam"];
 
+      $sql = "select a.*, group_concat(distinct concat(' ',b.nev)), ";
+      $sql .= "group_concat(distinct concat(' ',e.name)), ";
+      $sql .= "group_concat(distinct concat(' ',g.name)) ";
+      $sql .= "from dokumentum a ";
+      $sql .= "left join dok_ceg c ";
+      $sql .= "inner join ceg b on c.ceg_id = b.id ";
+      $sql .= "on a.id = c.dok_id ";
+      $sql .= "left join dok_taj d ";
+      $sql .= "inner join taj e on e.code = d.tajkod ";
+      $sql .= "on a.id = d.dok_id ";
+      $sql .= "left join dok_eto f ";
+      $sql .= "inner join eto g on g.code = f.eto_kod ";
+      $sql .= "on a.id = f.dok_id ";
+      $sql .= "where a.leltari_szam1 ='" . db_escape($db, $leltari_szam) . "'";
+
+      $result=mysqli_query($db, $sql);
 ?>
 
 <table class="list">
   <tr>
-    <th name="th1">ID</th>
-    <th name="th2">Leltári szám 1</th>
-    <th name="th3">Leltari szam 2</th>
-    <th name="th4">Szerző</th>
-    <th name="th5">Cím</th>
-    <th name="th6">Év</th>
+    <th>ID</th>
+    <th>Leltári szám 1</th>
+    <th>Leltari szam 2</th>
+    <th>Szerző</th>
+    <th>Cím</th>
+    <th>Év</th>
+
     <th>&nbsp;</th>
     <th>&nbsp;</th>
     <th>&nbsp;</th>
   </tr>
 
   <?php
-   while ($leltari_szam = mysqli_fetch_assoc($documentum_set))
+   while ($leltari_szam = mysqli_fetch_assoc($result))
         {
           $count = 0;
       print("<tr>");

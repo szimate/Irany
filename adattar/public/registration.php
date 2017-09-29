@@ -12,7 +12,7 @@ if(is_post_request()) {
   $result = insert_users($user);
   if($result === true) {
     $new_id = mysqli_insert_id($db);
-    $_SESSION['message'] = 'user created.';
+    $_SESSION['message'] = 'Felhasználó létrehozva!';
     redirect_to(url_for('/wellcome.php?id=' . $new_id));
   } else {
     $errors = $result;
@@ -69,7 +69,8 @@ if(is_post_request()) {
           <dd><input type="password" name="confirm_password" value="" /></dd>
         </dl>
               <p>
-                Passwords should be at least 12 characters and include at least one uppercase letter, lowercase letter, number, and symbol.
+                A jelszónak legalább 12 karakter hosszúnak kell lennie és
+                tartalmaznia kell legalább egy kis és nagy-betűt és speciáls egy karaktert.
               </p>
 				<div id="operations">
 					<input type="submit" class="nyomogomb" value="Regisztrálok!" />
