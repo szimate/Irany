@@ -10,6 +10,16 @@ $document_set = find_all_documents();
 <?php $page_title = 'Documentums'; ?>
 <?php include(SHARED_PATH . '/data_header.php'); ?>
 
+<div>
+  <form method="POST" action="<?php echo url_for('/data_manager/search/show.php'); ?>" >
+    <dl>
+      <dt> Leltári szám: </dt>
+      <dd><input type="text" name="leltari_szam"></dd>
+      <dd><input type="submit" value="Keresés"></dd>
+    </dl>
+  </form>
+</div>
+
 <div id="content">
   <div class="documents listing">
     <h1>Documents</h1>

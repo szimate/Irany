@@ -1,7 +1,7 @@
 <?php
 require_once('../../../private/initialize.php');
 
-require_login();
+require_login_user();
 ?>
 
 <?php
@@ -9,7 +9,6 @@ require_login();
 $id = $_GET['id'] ?? '1'; // PHP > 7.0
 
 $document = find_document_by_id($id);
-
 ?>
 
 <?php $page_title = 'Show document';
@@ -17,7 +16,7 @@ $document = find_document_by_id($id);
 
 <div id="content">
 
-  <a class="back-link" href="<?php echo url_for('/data_manager/documents/index.php'); ?>" &laquo;> Vissza a listához</a>
+  <a class="back-link" href="<?php echo url_for('/data_manager/users/show.php?=' . h(u($id))); ?>" &laquo;> Vissza a listához</a>
 
   <div class="document show">
 
@@ -85,18 +84,6 @@ $document = find_document_by_id($id);
 <dl>
   <dt>Adattár</dt>
   <dd><?php echo h($document['adattar']); ?></dd>
-</dl>
-<dl>
-  <dt>Cég</dt>
-  <dd><?php echo h($ceg_document['ceg_id']); ?></dd>
-</dl>
-<dl>
-  <dt>Eto</dt>
-  <dd><?php echo h($document['hozzaadva']); ?></dd>
-</dl>
-<dl>
-  <dt>Táj</dt>
-  <dd><?php echo h($document['hozzaadva']); ?></dd>
 </dl>
 <dl>
   <dt>Létrehozta</dt>

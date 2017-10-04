@@ -4,6 +4,7 @@
 require_once('../../../private/initialize.php');
 
 require_login();
+
 //ez megkeresi az összes admint az adatbázisból
 $admin_set = find_all_admins(); //
 ?>
@@ -43,7 +44,7 @@ include(SHARED_PATH . '/data_header.php'); ?>
           <td><?php /*kiírja az adatbázis lekérdezés az email-t*/ echo h($admin['email']); ?></td>
           <td><?php /*kiírja az adatbázis lekérdezés a username-et*/ echo h($admin['username']); ?></td>
           <td><a class="action" href="<?php /*átirányít oda ahol megnézheted az adatokat*/
-  /*TODO*/        echo url_for('/data_manager/admins/show.php?id=' ./*a h és az u függvény a biztonságos használathoz szükségs*/ h(u($admin['id']))); ?>">Megtekintés</a></td>
+  /*TODO*/        echo url_for('/data_manager/admins/show.php?id=' . h(u($admin['id']))); ?>">Megtekintés</a></td>
           <td><a class="action" href="<?php echo url_for('/data_manager/admins/edit.php?id=' . h(u($admin['id']))); ?>">Szerkesztés</a></td>
           <td><a class="action" href="<?php echo url_for('/data_manager/admins/delete.php?id=' . h(u($admin['id']))); ?>">Törlés</a></td>
         </tr>

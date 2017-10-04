@@ -39,15 +39,14 @@ return true;
 
 function require_login() {
   if(!is_log_in()) {
-    redirect_to(url_for('/wellcome.php'));
+    redirect_to(url_for('/index.php'));
   } else {
   }
 }
 function require_login_user() {
   if(!is_log_in_user()) {
-    redirect_to(url_for('/wellcome.php'));
+    redirect_to(url_for('/index.php'));
   } else {
   }
 }
-
 ?>

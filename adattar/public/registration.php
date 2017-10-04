@@ -13,7 +13,7 @@ if(is_post_request()) {
   if($result === true) {
     $new_id = mysqli_insert_id($db);
     $_SESSION['message'] = 'Felhasználó létrehozva!';
-    redirect_to(url_for('/wellcome.php?id=' . $new_id));
+    redirect_to(url_for('/index.php?id=' . $new_id));
   } else {
     $errors = $result;
   }
@@ -32,6 +32,12 @@ if(is_post_request()) {
 
 <?php $page_title = 'Regisztráció'; ?>
 <?php include(SHARED_PATH . '/data_header.php'); ?>
+
+<navigation name="kezdolap">
+  <ul>
+      <li><a href="<?php echo url_for('/index.php'); ?>">Vissza a kezdőlapra</a></li>
+  </ul>
+</navigation>
 
 <?php echo display_errors($errors); ?>
 

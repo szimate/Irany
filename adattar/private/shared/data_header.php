@@ -1,6 +1,7 @@
 <?php //a cím a böngésző feljécében mindíg változik
 //az adott oldal tartalmához igazítva
-  if(!isset($page_title)) { $page_title = 'Wellcome!'; }
+  if(!isset($page_title)) { $page_title = 'welcome!'; }
+
 ?>
 
 <!doctype html>
@@ -13,7 +14,7 @@
 
   <body>
     <header>
-      <h1>Wellcome to Data Storage</h1>
+      <h1>Welcome to Data Storage</h1>
     </header>
 
 <?php echo display_session_message();

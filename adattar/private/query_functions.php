@@ -2,14 +2,10 @@
 
 //dokumentumok
 
-  function find_all_documents($options=[]) {
+  function find_all_documents() {
     global $db;
 
-    $visible = $options['visible'] ?? false;
     $sql = "SELECT * FROM dokumentum ";
-    if($visible) {
-      $sql .= "WHERE visible = true ";
-    }
     $sql .= "ORDER BY id DESC ";
     $sql .= "LIMIT 10";
 
@@ -42,7 +38,6 @@
     return $document;
 
   }
-
   function find_document_by_id($id, $options=[]) {
     global $db;
 
@@ -187,7 +182,7 @@
     global $db;
 
     $sql = "SELECT * FROM admins ";
-    $sql .= "ORDER BY first_name DESC, last_name DESC";
+    $sql .= "ORDER BY id ASC";
     $result = mysqli_query($db, $sql);
     confirm_result_set($result);
     return $result;
@@ -318,8 +313,6 @@
 
   function delete_admin($admin) {
     global $db;
-
-
 
     $sql = "DELETE FROM admins ";
     $sql .= "WHERE id='" . db_escape($db, $admin['id']) . "' ";

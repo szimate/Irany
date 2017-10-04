@@ -1,6 +1,11 @@
 <?php require_once('../private/initialize.php'); ?>
-<?php  require_login_user();  ?>
 
+<?php  require_login_user();
+
+$username = $_GET['username'];
+$user = find_user_by_username($username);
+
+?>
 <?php $page_title = 'Personal'; ?>
 
 <?php include(SHARED_PATH . '/data_header.php'); ?>

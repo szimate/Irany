@@ -16,7 +16,6 @@ if(is_post_request()) {
 } else {
   $admin = find_admin_by_id($id);
 }
-
 ?>
 
 <?php $page_title = 'Admin törlése'; ?>
@@ -28,7 +27,7 @@ if(is_post_request()) {
 
   <div class="admin delete">
     <h1>Admin törlése</h1>
-    <p>Are you sure you want to delete this admin?</p>
+    <p>Biztosan törölni szeretnéd az admint?</p>
     <p class="item"><?php echo h($admin['username']); ?></p>
 
     <form action="<?php echo url_for('/data_manager/admins/delete.php?id=' . h(u($admin['id']))); ?>" method="post">
@@ -37,7 +36,6 @@ if(is_post_request()) {
       </div>
     </form>
   </div>
-
 </div>
 
 <?php include(SHARED_PATH . '/data_footer.php'); ?>

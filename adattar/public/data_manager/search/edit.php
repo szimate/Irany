@@ -3,17 +3,21 @@
 require_once('../../../private/initialize.php');
 require_login();
 
-$document_set = find_all_documents();
-$document_count = mysqli_num_rows($document_set) + 1;
-mysqli_free_result($document_set);
+if(!isset($_GET['id'])) {
+  redirect_to(url_for('/data_manager/documents/index.php'));
+}
+$id = $_GET['id'];
 
 if(is_post_request()) {
 
+  // Handle form values sent by new.php
+
   $document = [];
+  $document['id'] = $id;
   $document['leltari_szam1'] = $_POST['leltari_szam1'] ?? '';
   $document["leltari_szam2"] = $_POST['leltari_szam2'] ?? '';;
-  $document["szerzo"] = $_POST['szerzo'] ?? '';;
   $document["cim"] = $_POST['cim'] ?? '';;
+  $document["szerzo"] = $_POST['szerzo'] ?? '';;
   $document["ev"] = $_POST['ev'] ?? '';;
   $document["szoveg"] = $_POST['szoveg'] ?? '';;
   $document["terkep"] = $_POST['terkep'] ?? '';;
@@ -26,56 +30,41 @@ if(is_post_request()) {
   $document["diagram"] = $_POST['diagram'] ?? '';;
   $document["vizsgalat"] = $_POST['vizsgalat'] ?? '';;
   $document["adattar"] = $_POST['adattar'] ?? '';;
-  $document["ceg_id"] = $_POST['ceg_id'] ?? '' ;;
-  $document["letrehozta"] = $_SESSION['username'] ?? '';;
-  $document["hozzaadva"] = $_POST['hozzaadva'] ?? '' ;;
+  $document["letrehozta"] = $_POST['letrehozta'] ?? '';;
+  $document["hozzaadta"] = $_POST['hozzaadta'] ?? '';;
 
-  $result = insert_document($document);
+
+  $result = update_document($document);
   if($result === true) {
-    $new_id = mysqli_insert_id($db);
-    $_SESSION['message'] = 'Dokumentum étrehozása sikeres.';
-    redirect_to(url_for('/data_manager/documents/show.php?id=' . $new_id));
+    $_SESSION['message'] = 'Sikeresen frissítetted a dokumentumot.';
+    redirect_to(url_for('/data_manager/documents/show.php?id=' . $id));
   } else {
     $errors = $result;
   }
 
 } else {
-  // display the blank form
-  $document = [];
-  $document["leltari_szam1"] = '';
-  $document["leltari_szam2"] = '';
-  $document["szerzo"] = '';
-  $document["cim"] = '';
-  $document["szerzo"] = '';
-  $document["ev"] = '';
-  $document["szoveg"] = '';
-  $document["terkep"] = '';
-  $document["szelveny"] = '';
-  $document["tablazat"] = '';
-  $document["abra"] = '';
-  $document["foto"] = '';
-  $document["melleklet"] = '';
-  $document["retegsor"] = '';
-  $document["diagram"] = '';
-  $document["vizsgalat"] = '';
-  $document["adattar"] = '';
-  $document["ceg_id"] = '';
+  $document = find_document_by_id($id);
 }
 
+$document_set = find_all_documents();
+$document_count = mysqli_num_rows($document_set);
+mysqli_free_result($document_set);
+
 ?>
-<?php $page_title = 'Create document'; ?>
+
+<?php $page_title = 'Dokumentum szerkesztés'; ?>
 <?php include(SHARED_PATH . '/data_header.php'); ?>
 
 <div id="content">
 
-  <a class="back-link" href="<?php echo url_for('/data_manager/documents/index.php'); ?>" &laquo;> Vissza a listához</a>
+  <a class="back-link" href="<?php echo url_for('/data_manager/documents/index.php'); ?>"&laquo;> Vissza a listához</a>
 
-  <div class="document new">
-    <h1>Dokumentum létrehozása</h1>
+  <div class="document edit">
+    <h1>Dokumentum szerkesztése</h1>
 
     <?php echo display_errors($errors); ?>
 
-    <form action="<?php echo url_for('/data_manager/documents/new.php'); ?>" method="post">
+    <form action="<?php echo url_for('/data_manager/documents/edit.php?id=' . h(u($id))); ?>" method="post">
       <dl>
         <dt>Leltári szám 1</dt>
         <dd><input type="text" name="leltari_szam1" value="<?php echo h($document['leltari_szam1']); ?>" /></dd>
@@ -138,22 +127,20 @@ if(is_post_request()) {
   <dd><input type="text" name="adattar" value="<?php echo h($document['adattar']); ?>" /></dd>
 </dl>
 <dl>
-  <dt>Cég</dt>
-  <dd><input type="text" name="ceg_id" value="<?php echo h($document['ceg_id']); ?>" /></dd>
-</dl>
-<dl>
   <dt>Létrehozta</dt>
-  <dd><?php echo h($_SESSION['username']); ?></dd>
+  <dd><input type="text" name="letrehozta" value="<?php echo h($document['letrehozta']); ?>" readonly /></dd>
 </dl>
 <dl>
-  <dt>Dátum</dt>
-  <dd><input type="datetime" name="hozzaadva" value="<?php echo h(date("Y-m-d H:i:s")); ?>" readonly /></dd>
+  <dt>Hozzáadva</dt>
+  <dd><input type="text" name="hozzaadva" value="<?php echo h($document['hozzaadva']); ?>" readonly /></dd>
 </dl>
       <div id="operations">
-        <input type="submit" class="nyomogomb" value="Dokumentum létrehozása" />
+        <input type="submit" class="nyomogomb" value="Mentés" />
       </div>
     </form>
+
   </div>
+
 </div>
 
 <?php include(SHARED_PATH . '/data_footer.php'); ?>

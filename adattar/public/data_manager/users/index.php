@@ -1,53 +1,63 @@
 <?php
-
-//ez az oldal felépítéséhez alapvető paracsokat tartalmazza(függvények, adatbázis csatlakozás, adatbázis lekérdezések)
 require_once('../../../private/initialize.php');
-require_login();
-//ez megkeresi az összes admint az adatbázisból
 
-$user_set = find_all_users(); //
-//ez mindíg az aktuális oldal címét írja ki a böngészőben
- $page_title = 'Users';
+require_login_user();
 
-//a parancsa a rövidebb elérési utat biztosítja(fejléc általános használata)
-include(SHARED_PATH . '/data_header.php'); ?>
+$document_set = find_all_documents();
+
+?>
+
+<?php $page_title = 'Documentums'; ?>
+<?php include(SHARED_PATH . '/data_header.php'); ?>
+
+<div>
+  <form method="POST" action="<?php echo url_for('/data_manager/users/show.php'); ?>" >
+    <dl>
+      <dt> Leltári szám: </dt>
+      <dd><input type="text" name="leltari_szam"></dd>
+      <dd><input type="submit" value="Keresés"></dd>
+    </dl>
+  </form>
+</div>
 
 <div id="content">
-  <div class="admins listing">
-    <h1>Felhasználók</h1>
+  <div class="documents listing">
+    <h1>Documents</h1>
 
-    <table class="list">
-      <tr>
+  	<table class="list">
+  	  <tr>
         <th>ID</th>
-        <th>Vezetéknév</th>
-        <th>Keresztnév</th>
-        <th>Email</th>
-        <th>Felhasználónév</th>
-        <th>Törlés</th>
+        <th>Leltári szám </th>
+        <th>Leltari szam (2)</th>
+        <th>Szerző</th>
+        <th>Cím</th>
+        <th>Év</th>
+        <th>Adattar</th>
+  	    <th>&nbsp;</th>
+  	    <th>&nbsp;</th>
         <th>&nbsp;</th>
-      </tr>
+  	  </tr>
 
-      <?php /*TODO*/ while($user = mysqli_fetch_assoc($user_set)) { ?>
+      <?php while($document = mysqli_fetch_assoc($document_set)) { ?>
         <tr>
-          <td><?php /*kiírja az adatbázis lekérdezés az id-t*/ echo h($user['id']); ?></td>
-          <td><?php /*kiírja az adatbázis lekérdezés az first_name-et*/ echo h($user['first_name']); ?></td>
-          <td><?php /*kiírja az adatbázis lekérdezés az last_name-et*/ echo h($user['last_name']); ?></td>
-          <td><?php /*kiírja az adatbázis lekérdezés az email-t*/ echo h($user['email']); ?></td>
-          <td><?php /*kiírja az adatbázis lekérdezés a username-et*/ echo h($user['username']); ?></td>
+          <td><?php echo h($document['id']); ?></td>
+          <td><?php echo h($document['leltari_szam1']); ?></td>
+          <td><?php echo h($document['leltari_szam2']); ?></td>
+          <td><?php echo h($document['szerzo']); ?></td>
+          <td><?php echo h($document['cim']); ?></td>
+          <td><?php echo h($document['ev']); ?></td>
+          <td><?php echo h($document['adattar']); ?></td>
 
-          <td><a class="action" href="<?php echo url_for('/data_manager/users/delete.php?id=' . h(u($user['id']))); ?>">Törlés</a></td>
-        </tr>
+
+          <td><a class="action" href="<?php echo url_for('/data_manager/users/details.php?id=' . h(u($document['id']))); ?>">Megtekintés</a></td>
       <?php } ?>
-    </table>
+  	</table>
 
     <?php
-    //felszabadítja a memóriát
-      mysqli_free_result($user_set);
+      mysqli_free_result($document_set);
     ?>
   </div>
 
 </div>
 
-<?php
-//a parancsa a rövidebb elérési utat biztosítja(lábjegyzet általános használata)
- include(SHARED_PATH . '/data_footer.php'); ?>
+<?php include(SHARED_PATH . '/data_footer.php'); ?>
